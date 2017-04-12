@@ -11,5 +11,12 @@
 </head>
 <body>
 	<h1>Hello World</h1>
+<FORM ACTION="formAction.jsp" METHOD="POST">
+            Kysymys tulee tähän:
+            <BR>
+            <TEXTAREA NAME="textarea1" placeholder="Vastaus tähän..." ROWS="5"></TEXTAREA>
+            <BR>
+            <INPUT TYPE="reset" VALUE="Submit">
+        </FORM>
 </body>
 </html>
