@@ -17,7 +17,7 @@
 	
 	<!-- SERVLET -->
 	
-	<context:component-scan base-package="Kysely" />
+	<context:component-scan base-package="fi.swd22" />
 
 	<!-- Resolves view names to protected .jsp resources within the /WEB-INF/views 
 		directory -->
