@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class KyselyController {
-	@RequestMapping(value = "testJSON", method = RequestMethod.GET)
-	public @ResponseBody String TestJSON() {
-		return "test";
+	@RequestMapping(value = "kiitos", method = RequestMethod.GET)
+	public String TestJSON() {
+		return "kiitos";
 	}
 }
