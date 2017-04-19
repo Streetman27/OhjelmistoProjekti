@@ -1,0 +1,22 @@
+CREATE TABLE QUESTION_TYPE
+(id integer NOT NULL auto_increment PRIMARY KEY
+,definition varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE POLL
+(id integer NOT NULL auto_increment PRIMARY KEY
+,name varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE ANSWER
+(id integer NOT NULL auto_increment PRIMARY KEY
+,text varchar(255) NOT NULL
+,question_id integer NOT NULL FOREIGN KEY REFERENCES QUESTION(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE QUESTION
+(id integer NOT NULL auto_increment PRIMARY KEY
+,question varchar(255) NOT NULL
+,questionType_id integer NOT NULL FOREIGN KEY REFERENCES QUESTION_TYPE(id)
+,Poll_id integer NOT NULL FOREIGN KEY REFERENCES POLL(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
