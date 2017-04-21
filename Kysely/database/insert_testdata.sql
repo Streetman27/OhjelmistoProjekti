@@ -1,27 +1,31 @@
-INSERT INTO QUESTION_TYPE
-	(id, definition)
+--KYSELY TAULUT
+INSERT INTO kysymys_tyyppi
+	(id, maaritelma)
 values
-	(1, 'choice'),
+	(1, 'vaihtoehto'),
 	(2, 'radio'),
 	(3, 'checkbox'),
 	(4, 'textarea');
-
-INSERT INTO POLL
-	(id, name)
+	(5, 'matrix')
+	
+INSERT INTO kysely
+	(id, nimi)
 values
 	(1, 'Testikysely1'),
 	(2, 'Testikysely2');
 
-INSERT INTO QUESTION
-	(id, question, questionType_id, poll_id)
+INSERT INTO kysymys
+	(id, kysymys, tyyppi_id, kysely_id)
 values
-	(1, 'Onko tämä testikysymys?', 3, 1),
-	(2, 'Onko kakku hyvää?', 1, 1),
-	(3, 'Oletko viimeisen kuukauden aikana syönyt meetvurstia?', 2, 2),
-	(4, 'Oletko viime aikoina tuntenut olosi ihmiseksi?', 4, 2);
+	(1, 'Kerro tärkein / tärkeimmät syyt sille, miksi et ole liittynyt Helgan jäseneksi.', 4, 3),
+	(2, 'Onko tämä testikysymys?', 3, 1),
+	(3, 'Onko kakku hyvää?', 1, 1),
+	(4, 'Oletko viimeisen kuukauden aikana syönyt meetvurstia?', 2, 2),
+	(5, 'Oletko viime aikoina tuntenut olosi ihmiseksi?', 4, 2);
+	
 
-INSERT INTO ANSWER
-	(text, question_id)
+INSERT INTO vastaus
+	(teksti, kysymys_id)
 values
 	('kyllä', 1),
 	('ei', 1),
@@ -29,22 +33,3 @@ values
 	('vähän', 3),
 	('sopivasti', 3),
 	('paljon', 3);
-
---USER TABLES
-INSERT INTO authority
-	(id, role)
-VALUES
-	(2,'ROLE_ADMIN'),
-	(1,'ROLE_USER');
-
-INSERT INTO webuser
-	(id, username, password_encrypted, enabled)
-VALUES
-	(1,'admin','00',1),
-	(2,'user','00',1);
-
-INSERT INTO webuser_authority
-	(id, webuser_id, authority_id)
-VALUES
-	(1,1,2),
-	(2,2,1);
