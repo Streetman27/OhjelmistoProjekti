@@ -11,10 +11,10 @@ CREATE TABLE kysely
 
 CREATE TABLE kysymys
 (id integer NOT NULL auto_increment PRIMARY KEY
-,kysmys varchar(255) NOT NULL
+,kysymys varchar(255) NOT NULL
 ,tyyppi_id integer NOT NULL
-,poll_id integer NOT NULL
-,FOREIGN KEY (tyyppi_id) REFERENCES kysely_tyyppi(id)
+,kysely_id integer NOT NULL
+,FOREIGN KEY (tyyppi_id) REFERENCES kysymys_tyyppi(id)
 ,FOREIGN KEY (kysely_id) REFERENCES kysely(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
