@@ -10,14 +10,26 @@
 <link rel="stylesheet" type="text/css" href="resources/styles/common.css">
 </head>
 <body>
-	<h1>Linkit</h1>
+	<h1>Luo Uusi Kysymys</h1>
 	<br/>
-	
+	<form:form modelAttribute="kysymys" method="post">
+	<fieldset>
 		<p>
-			<a href="kys/uusiKysymys">Hae Kysymys</a><br>
-			<a href="kys/haeKysymys">Tee Uusi Kysymys</a><br>
-			<a href="kys/kiitos">Kiitos</a><br>
-			</p>
+			<form:label path="kysymys">Kysymys</form:label><br/>
+			<form:input path="kysymys" />
+			<br/>
+			<br/>	
+		</p>
+		<p>
+			<form:label path="tyyppi">Minka tyyppinen kysymys (monivalinta, kylla/ei)?</form:label><br/>
+			<form:input path="tyyppi"/>
+			<br/>
+			<br/>
+		</p>
+		<br/>	
+			<a href="kys/kiitos">Kiitos</a>
+		</fieldset>
+	</form:form>
     
 </body>
 </html>

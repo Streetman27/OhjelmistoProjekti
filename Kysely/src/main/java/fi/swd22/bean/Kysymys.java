@@ -4,7 +4,19 @@ import java.util.List;
 
 public interface Kysymys {
 	public abstract int getId();
+	
+	public abstract void setId(int Id);
+	
 	public abstract String getKysymys();
+	
+	public abstract void setKysymys(String kysymys);
+	
 	public abstract String getTyyppi();
+	
+	public abstract void setTyyppi(String tyyppi);
+	
 	public abstract List<Vastaus> getVaihtehdot();
+	
+	public abstract void setVastaukset(List<Vastaus> vastaukset);
+	
 }

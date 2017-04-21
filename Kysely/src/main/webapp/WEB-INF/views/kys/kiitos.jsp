@@ -12,7 +12,7 @@
 <body>
 
 	<h2>Kiitos vastauksestasi</h2>
-	<a href="./">Takaisin kyselyyn</a>
+	<a href="..">Takaisin etusivulle</a>
 
 </body>
 </html>
