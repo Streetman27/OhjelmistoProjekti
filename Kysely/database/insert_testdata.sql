@@ -6,7 +6,8 @@ values
 	(2, 'radio'),
 	(3, 'checkbox'),
 	(4, 'textarea');
-
+	(5, 'matrix')
+	
 INSERT INTO kysely
 	(id, nimi)
 values
@@ -16,10 +17,12 @@ values
 INSERT INTO kysymys
 	(id, kysymys, tyyppi_id, kysely_id)
 values
-	(1, 'Onko tämä testikysymys?', 3, 1),
-	(2, 'Onko kakku hyvää?', 1, 1),
-	(3, 'Oletko viimeisen kuukauden aikana syönyt meetvurstia?', 2, 2),
-	(4, 'Oletko viime aikoina tuntenut olosi ihmiseksi?', 4, 2);
+	(1, 'Kerro tärkein / tärkeimmät syyt sille, miksi et ole liittynyt Helgan jäseneksi.', 4, 3),
+	(2, 'Onko tämä testikysymys?', 3, 1),
+	(3, 'Onko kakku hyvää?', 1, 1),
+	(4, 'Oletko viimeisen kuukauden aikana syönyt meetvurstia?', 2, 2),
+	(5, 'Oletko viime aikoina tuntenut olosi ihmiseksi?', 4, 2);
+	
 
 INSERT INTO vastaus
 	(teksti, kysymys_id)
