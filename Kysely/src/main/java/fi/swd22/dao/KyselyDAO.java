@@ -1,13 +1,15 @@
 package fi.swd22.dao;
 
+import fi.swd22.bean.Kysymys;
+
 public interface KyselyDAO {
-	
-public String listaaKysymys(); //POST
 
-public String tuoKysymys(); //GET
+	public Kysymys haeKysymys();
 
-public String haeKysely(); //PUT
+	public Kysymys luoKysymys();
 
-public String poistaKysely(); //DELETE
+	public Kysymys paivitaKysely();
+
+	public Kysymys poistaKysely();
 
 }
