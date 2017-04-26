@@ -1,6 +1,5 @@
 package fi.swd22.controller;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,6 +15,7 @@ import fi.swd22.dao.KyselyDAO;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
 public class KyselyController {
 	@Inject
@@ -27,13 +27,14 @@ public class KyselyController {
 		return kysymys;
 	}
 	
-	@RequestMapping(value= "{}", method= RequestMethod.POST)
-	public @ResponseBody Kysymys luoKysymys(@PathVariable String id){
-		Kysymys kysymys = dao.luoKysymys(id);
-		return kysymys;
+	@RequestMapping(value= "kys/{uusi}", method={RequestMethod.POST}, headers="application/json")
+	public @ResponseBody Integer luoKysymys(@PathVariable Kysymys uusi){
+		Kysymys kysymys = dao.luoKysymys(uusi);
+		int vastaus = -1;
+		return vastaus;
 	}
 	
-	@RequestMapping(value= "kys/{id}", method= RequestMethod.DELETE)
+	@RequestMapping(value= "kys/poistettava/{id}", method= RequestMethod.DELETE)
 	public @ResponseBody Kysymys poistaKysymys(@PathVariable String id){
 		Kysymys kysymys = dao.poistaKysymys(id);
 		return kysymys;

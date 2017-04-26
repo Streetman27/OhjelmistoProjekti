@@ -6,7 +6,7 @@ public interface KyselyDAO {
 
 	public Kysymys haeKysymys(String id);
 
-	public Kysymys luoKysymys(String id);
+	public Kysymys luoKysymys(Kysymys id);
 
 	public Kysymys paivitaKysymys(String id);
 
