@@ -5,14 +5,15 @@ values
 	(1, 'vaihtoehto'),
 	(2, 'radio'),
 	(3, 'checkbox'),
-	(4, 'textarea');
-	(5, 'matrix')
+	(4, 'textarea'),
+	(5, 'matrix');
 	
 INSERT INTO kysely
 	(id, nimi)
 values
 	(1, 'Testikysely1'),
-	(2, 'Testikysely2');
+	(2, 'Testikysely2'),
+	(3, 'Testikysely2');
 
 INSERT INTO kysymys
 	(id, kysymys, tyyppi_id, kysely_id)
@@ -22,7 +23,6 @@ values
 	(3, 'Onko kakku hyvää?', 1, 1),
 	(4, 'Oletko viimeisen kuukauden aikana syönyt meetvurstia?', 2, 2),
 	(5, 'Oletko viime aikoina tuntenut olosi ihmiseksi?', 4, 2);
-	
 
 INSERT INTO vastaus
 	(teksti, kysymys_id)
