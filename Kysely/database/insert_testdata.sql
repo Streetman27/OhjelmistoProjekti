@@ -27,9 +27,9 @@ values
 INSERT INTO vastaus
 	(teksti, kysymys_id)
 values
-	('kyllä', 1),
-	('ei', 1),
-	('ehkä', 1),
+	('kyllä', 5),
+	('ei', 5),
+	('ehkä', 5),
 	('vähän', 3),
 	('sopivasti', 3),
 	('paljon', 3);

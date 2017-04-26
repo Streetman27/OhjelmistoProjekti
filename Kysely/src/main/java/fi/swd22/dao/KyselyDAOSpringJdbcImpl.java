@@ -33,24 +33,34 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public String listaaKysymys() {
-		String sql = "";
+	public Kysymys haeKysymys() {
+		String sql="SELECT K.id, K.kysymys, T.maaritelma, V.teksti"
+				+ " FROM kysymys K"
+				+ " JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id"
+				+ " JOIN vastaus V ON V.kysymys_id = K.id"
+				+ " WHERE K.id = ?";
+		RowMapper<Kysymys> mapper = new KyselyRowMapper();
+		List<Kysymys> kysymykset = jdbcTemplate.query(sql, mapper);
+		
+		return kysymykset;
+	}
+
+	public Kysymys luoKysymys() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String tuoKysymys() {
-		String sql = "";
+	public Kysymys paivitaKysymys() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String haeKysely() {
-		String sql = "";
+	public Kysymys poistaKysymys() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public String poistaKysely() {
-		String sql="";
-		return null;
-	}
-
+	
+	
 }
+
+
