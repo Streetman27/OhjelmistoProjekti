@@ -4,12 +4,12 @@ import fi.swd22.bean.Kysymys;
 
 public interface KyselyDAO {
 
-	public Kysymys haeKysymys();
+	public Kysymys haeKysymys(String id);
 
-	public Kysymys luoKysymys();
+	public Kysymys luoKysymys(String id);
 
-	public Kysymys paivitaKysely();
+	public Kysymys paivitaKysymys(String id);
 
-	public Kysymys poistaKysely();
+	public Kysymys poistaKysymys(String id);
 
 }
