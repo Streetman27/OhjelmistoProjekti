@@ -2,6 +2,7 @@ package fi.swd22.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,21 +21,22 @@ public class KysymysRowMapper implements RowMapper<Kysymys> {
 		kysymys.setKysymys(rs.getString("kysymys"));
 		kysymys.setTyyppi(rs.getString("maaritelma"));
 		
-		/*
+		
 		//vastaus arvot
-		String arvot = (rs.getString("arvot"));
-		List<String> items = Arrays.asList(arvot.split(","));
-		List<Vastaus> vastaukset = null;
+		String arvot = (rs.getString("arvot")); //Esimerkiksi splittaa Kyllä,Ei,Ehkä
+		List<String> items = Arrays.asList(arvot.split("\\s*,\\s*"));
+		List<Vastaus> vastaukset = new ArrayList<Vastaus>();
+
 		
 //		for (String arvo : items) {
 		for (int i = 0; i < items.size(); i++) {
 			
 			Vastaus vastaus = new VastausImpl();
-			vastaus.setArvo(arvo);
+			vastaus.setArvo(items.get(i));
 			vastaukset.add(vastaus);
 		}
-		*/
-		kysymys.setVastaukset(null);
+
+		kysymys.setVastaukset(vastaukset);
 		
 		
 		return kysymys;

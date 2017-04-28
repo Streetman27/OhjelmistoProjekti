@@ -25,7 +25,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	}
 
 	public Kysymys haeKysymys(int id) {
-		String sql="SELECT K.id, K.kysymys, T.maaritelma, GROUP_CONCAT(V.teksti) as arvot"
+		String sql="SELECT K.id, K.kysymys, T.maaritelma, V.id, GROUP_CONCAT(V.teksti) as arvot"
 				+ " FROM kysymys K"
 				+ " JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id"
 				+ " JOIN vastaus V ON V.kysymys_id = K.id"
