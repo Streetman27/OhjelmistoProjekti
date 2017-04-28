@@ -8,12 +8,12 @@ public interface KyselyDAO {
 	
 	
 	//yhden kysymyksen käsittely
-	public abstract List<Kysymys> haeKysymys(int id);
+	public abstract Kysymys haeKysymys(int id);
 
-	public abstract Kysymys luoKysymys();
+	public abstract int luoKysymys(Kysymys kysymys);
 
-	public abstract Kysymys paivitaKysymys();
+	public abstract Kysymys paivitaKysymys(Kysymys kysymys);
 
-	public abstract Kysymys poistaKysymys(int id);
+	public abstract int poistaKysymys(int id);
 
 }

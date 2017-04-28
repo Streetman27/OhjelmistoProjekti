@@ -16,21 +16,26 @@ public class KysymysRowMapper implements RowMapper<Kysymys> {
 
 	public Kysymys mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Kysymys kysymys = new KysymysImpl();
-		Vastaus vastaus = new VastausImpl();
-		
 		kysymys.setId(rs.getInt("id"));
 		kysymys.setKysymys(rs.getString("kysymys"));
 		kysymys.setTyyppi(rs.getString("maaritelma"));
-
+		
+		/*
 		//vastaus arvot
 		String arvot = (rs.getString("arvot"));
 		List<String> items = Arrays.asList(arvot.split(","));
 		List<Vastaus> vastaukset = null;
-		for (String arvo : items) {
+		
+//		for (String arvo : items) {
+		for (int i = 0; i < items.size(); i++) {
+			
+			Vastaus vastaus = new VastausImpl();
 			vastaus.setArvo(arvo);
 			vastaukset.add(vastaus);
 		}
-		kysymys.setVastaukset(vastaukset);
+		*/
+		kysymys.setVastaukset(null);
+		
 		
 		return kysymys;
 	}

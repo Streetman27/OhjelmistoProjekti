@@ -4,16 +4,17 @@ import java.util.List;
 
 public class KyselyImpl implements Kysely{
 	private int id;
-	private String Aihe;
+	private String nimi;
+	//private String kuvaus; todo
 	private List<Kysymys> kysymykset;
 	
 	public KyselyImpl() {
 		super();
 	}
-	public KyselyImpl(int id, String aihe) {
+	public KyselyImpl(int id, String nimi) {
 		super();
 		this.id = id;
-		Aihe = aihe;
+		this.nimi = nimi;
 	}
 	public int getId() {
 		return id;
@@ -21,11 +22,11 @@ public class KyselyImpl implements Kysely{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getAihe() {
-		return Aihe;
+	public String getNimi() {
+		return nimi;
 	}
-	public void setAihe(String aihe) {
-		Aihe = aihe;
+	public void setNimi(String nimi) {
+		this.nimi = nimi;
 	}
 	public List<Kysymys> getKysymykset() {
 		return kysymykset;
@@ -35,6 +36,6 @@ public class KyselyImpl implements Kysely{
 	}
 	@Override
 	public String toString() {
-		return "KyselyImpl [id=" + id + ", Aihe=" + Aihe + "]";
+		return "KyselyImpl [id=" + id + ", Nimi=" + nimi + "]";
 	}
 }

@@ -15,6 +15,8 @@ public class KyselyRowMapper implements RowMapper<Kysely> {
 		kysely.setId(rs.getInt("id"));
 		kysely.setAihe(rs.getString("aihe"));
 		
+		
+		
 		return kysely;
 	}
 

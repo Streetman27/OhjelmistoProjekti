@@ -7,9 +7,9 @@ public interface Kysely {
 
 	public abstract void setId(int id);
 
-	public abstract String getAihe();
+	public abstract String getNimi();
 
-	public abstract void setAihe(String aihe);
+	public abstract void setNimi(String nimi);
 
 	public abstract List<Kysymys> getKysymykset();
 

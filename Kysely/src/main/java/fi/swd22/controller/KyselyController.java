@@ -21,28 +21,27 @@ public class KyselyController {
 	@Inject
 	KyselyDAO dao;
 	
-	@RequestMapping(value= "kys/{id}", method= RequestMethod.GET)
-	public @ResponseBody Kysymys getKysymys(@PathVariable String id){
+	@RequestMapping(value= "kysymys/{id}", method= RequestMethod.GET)
+	public @ResponseBody Kysymys getKysymys(@PathVariable int id){
 		Kysymys kysymys = dao.haeKysymys(id);
 		return kysymys;
 	}
 	
-	@RequestMapping(value= "kys/{uusi}", method={RequestMethod.POST}, headers="application/json")
+	@RequestMapping(value= "kysymys/{uusi}", method={RequestMethod.POST}, headers="application/json")
 	public @ResponseBody Integer luoKysymys(@PathVariable Kysymys uusi){
-		Kysymys kysymys = dao.luoKysymys(uusi);
-		int vastaus = -1;
+		int vastaus = dao.luoKysymys(uusi);
 		return vastaus;
 	}
 	
-	@RequestMapping(value= "kys/poistettava/{id}", method= RequestMethod.DELETE)
-	public @ResponseBody Kysymys poistaKysymys(@PathVariable String id){
-		Kysymys kysymys = dao.poistaKysymys(id);
-		return kysymys;
+	@RequestMapping(value= "kysymys/poistettava/{id}", method= RequestMethod.DELETE)
+	public @ResponseBody Integer poistaKysymys(@PathVariable int id){
+		int vastaus = dao.poistaKysymys(id);
+		return vastaus;
 	}
 	
-	@RequestMapping(value= "{}", method= RequestMethod.PATCH)
-	public @ResponseBody Kysymys paivitaKysymys(@PathVariable String id){
-		Kysymys kysymys = dao.paivitaKysymys(id);
+	@RequestMapping(value= "kysymys/{id}", method= RequestMethod.PATCH)
+	public @ResponseBody Kysymys paivitaKysymys(@PathVariable Kysymys paivitys){
+		Kysymys kysymys = dao.paivitaKysymys(paivitys);
 		return kysymys;
 	}
 	

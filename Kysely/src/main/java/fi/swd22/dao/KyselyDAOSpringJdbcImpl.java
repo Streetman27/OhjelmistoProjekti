@@ -24,7 +24,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public List<Kysymys> haeKysymys(int id) {
+	public Kysymys haeKysymys(int id) {
 		String sql="SELECT K.id, K.kysymys, T.maaritelma, GROUP_CONCAT(V.teksti) as arvot"
 				+ " FROM kysymys K"
 				+ " JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id"
@@ -34,24 +34,26 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		RowMapper<Kysymys> mapper = new KysymysRowMapper();
 		
 		List<Kysymys> kysymykset = jdbcTemplate.query(sql, parameters, mapper);
+		Kysymys kysymys = kysymykset.get(1);  //paivitä tätä
 		
-		return kysymykset;
+		return kysymys;
 	}
 
-	public Kysymys luoKysymys() {
+	public int luoKysymys(Kysymys kysymys) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Kysymys paivitaKysymys(Kysymys kysymys) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Kysymys paivitaKysymys() {
+	public int poistaKysymys(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	public Kysymys poistaKysymys(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }
 
