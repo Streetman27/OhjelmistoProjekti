@@ -38,7 +38,7 @@ public class KysymysImpl implements Kysymys {
 	public void setTyyppi(String tyyppi) {
 		this.tyyppi = tyyppi;
 	}
-	public List<Vastaus> getVaihtehdot() {
+	public List<Vastaus> getVastaukset() {
 		return vastaukset;
 	}
 	public void setVastaukset(List<Vastaus> vastaukset) {

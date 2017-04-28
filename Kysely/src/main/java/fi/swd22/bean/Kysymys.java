@@ -15,7 +15,7 @@ public interface Kysymys {
 	
 	public abstract void setTyyppi(String tyyppi);
 	
-	public abstract List<Vastaus> getVaihtehdot();
+	public abstract List<Vastaus> getVastaukset();
 	
 	public abstract void setVastaukset(List<Vastaus> vastaukset);
 	

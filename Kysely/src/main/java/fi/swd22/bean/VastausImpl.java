@@ -5,7 +5,6 @@ public class VastausImpl implements Vastaus {
 	private String arvo;
 	public VastausImpl() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public VastausImpl(int id, String arvo) {
 		super();

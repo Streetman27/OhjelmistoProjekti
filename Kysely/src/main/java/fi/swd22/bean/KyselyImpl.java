@@ -1,8 +1,12 @@
 package fi.swd22.bean;
 
+import java.util.List;
+
 public class KyselyImpl implements Kysely{
 	private int id;
 	private String Aihe;
+	private List<Kysymys> kysymykset;
+	
 	public KyselyImpl() {
 		super();
 	}
@@ -22,6 +26,12 @@ public class KyselyImpl implements Kysely{
 	}
 	public void setAihe(String aihe) {
 		Aihe = aihe;
+	}
+	public List<Kysymys> getKysymykset() {
+		return kysymykset;
+	}
+	public void setKysymykset(List<Kysymys> kysymykset) {
+		this.kysymykset = kysymykset;
 	}
 	@Override
 	public String toString() {
