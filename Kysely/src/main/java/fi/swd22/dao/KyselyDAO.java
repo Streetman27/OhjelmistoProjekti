@@ -1,15 +1,19 @@
 package fi.swd22.dao;
 
+import java.util.List;
+
 import fi.swd22.bean.Kysymys;
 
 public interface KyselyDAO {
+	
+	
+	//yhden kysymyksen käsittely
+	public abstract List<Kysymys> haeKysymys(int id);
 
-	public Kysymys haeKysymys(String id);
+	public abstract Kysymys luoKysymys();
 
-	public Kysymys luoKysymys(Kysymys id);
+	public abstract Kysymys paivitaKysymys();
 
-	public Kysymys paivitaKysymys(String id);
-
-	public Kysymys poistaKysymys(String id);
+	public abstract Kysymys poistaKysymys(int id);
 
 }
