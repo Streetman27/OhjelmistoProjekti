@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import fi.swd22.bean.Kysymys;
-import fi.swd22.bean.KysymysImpl;
+import fi.swd22.bean.Kysymys;
 import fi.swd22.dao.KyselyDAO;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +48,7 @@ public class KyselyController {
 	
 	@RequestMapping(value="uusi", method=RequestMethod.GET)
 	public String getCreateForm(Model model) {
-		Kysymys uusiKysymys = new KysymysImpl();
+		Kysymys uusiKysymys = new Kysymys();
 		uusiKysymys.setKysymys("");
 		
 		model.addAttribute("kysymys", uusiKysymys);
