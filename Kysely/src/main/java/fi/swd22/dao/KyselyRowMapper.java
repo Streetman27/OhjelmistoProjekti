@@ -13,7 +13,7 @@ public class KyselyRowMapper implements RowMapper<Kysely> {
 	public Kysely mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Kysely kysely = new KyselyImpl();
 		kysely.setId(rs.getInt("id"));
-		kysely.setAihe(rs.getString("aihe"));
+		kysely.setNimi(rs.getString("nimi"));
 		
 		
 		

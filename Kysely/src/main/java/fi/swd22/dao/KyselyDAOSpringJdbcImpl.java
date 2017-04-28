@@ -34,7 +34,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		RowMapper<Kysymys> mapper = new KysymysRowMapper();
 		
 		List<Kysymys> kysymykset = jdbcTemplate.query(sql, parameters, mapper);
-		Kysymys kysymys = kysymykset.get(1);  //paivitä tätä
+		Kysymys kysymys = kysymykset.get(0);  //paivitä tätä
 		
 		return kysymys;
 	}
