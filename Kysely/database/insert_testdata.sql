@@ -33,3 +33,4 @@ values
 	('vähän', 3),
 	('sopivasti', 3),
 	('paljon', 3);
+	
