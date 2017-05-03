@@ -1,6 +1,5 @@
 package fi.swd22.controller;
 
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -8,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import fi.swd22.bean.Kysely;
 import fi.swd22.bean.Kysymys;
 import fi.swd22.bean.Kysymys;
 import fi.swd22.dao.KyselyDAO;
@@ -21,6 +21,14 @@ public class KyselyController {
 	@Inject
 	KyselyDAO dao;
 	
+	//kyselyn kontrolli
+	@RequestMapping(value= "kysely/{id}", method= RequestMethod.GET)
+	public @ResponseBody Kysely getKysely(@PathVariable int id){
+		Kysely kysely = dao.haeKysely(id);
+		return kysely;
+	}
+	
+	//kysymyksen kontrolli
 	@RequestMapping(value= "kysymys/{id}", method= RequestMethod.GET)
 	public @ResponseBody Kysymys getKysymys(@PathVariable int id){
 		Kysymys kysymys = dao.haeKysymys(id);

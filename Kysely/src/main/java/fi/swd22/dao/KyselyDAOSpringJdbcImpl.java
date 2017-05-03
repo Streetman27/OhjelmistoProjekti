@@ -1,5 +1,6 @@
 package fi.swd22.dao;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,30 +28,46 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	}
 
 	public Kysely haeKysely(int id) {
+		//kysely
 		String sqlKysely="SELECT id, nimi "
 		+ "FROM kysely "
 		+ "WHERE id = ?";
 		
+		Object[] kyselyId = new Object[] { id };
+		Kysely kysely = jdbcTemplate.queryForObject(sqlKysely, kyselyId, new KyselyRowMapper());
+		
+		System.out.println("kysely: " + kysely.getId() + " " + kysely.getNimi());
+		
+		//kysymys
 		String sqlKysymys="SELECT K.id, K.kysymys, T.maaritelma "
 		+ "FROM kysymys K "
 		+ "JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id "
 		+ "JOIN kysely Kys ON Kys.id = K.kysely_id "
 		+ "WHERE Kys.id = ?;";
 		
-		String sqlVastaus="SELECT V.id, V.teksti "
-		+ "FROM vastaus V "
-		+ "JOIN kysymys K ON K.id = V.kysymys_id "
-		+ "JOIN kysely Kys ON Kys.id = K.kysely_id "
-		+ "WHERE Kys.id = ?;";
-		
-		Object[] parameters = new Object[] { id };
-		//RowMapper<Kysely> mapperKysely = new KyselyRowMapper();
 		RowMapper<Kysymys> mapperKysymys = new KysymysRowMapper();
+		List<Kysymys> kysymykset = jdbcTemplate.query(sqlKysymys, kyselyId, mapperKysymys);
+		
+		//vastaukset/vaihtoehdot
+		String sqlVastaus="SELECT V.id, V.teksti "
+				+ "FROM vastaus V "
+				+ "JOIN kysymys K ON K.id = V.kysymys_id "
+				+ "WHERE K.id = ?";
+		
 		RowMapper<Vastaus> mapperVastaus = new VastausRowMapper();
 		
-		Kysely kysely = jdbcTemplate.queryForObject(sqlKysely, new KyselyRowMapper());
-		List<Kysymys> kysymykset = jdbcTemplate.query(sqlKysymys, parameters, mapperKysymys);
-		List<Vastaus> vastaukset = jdbcTemplate.query(sqlVastaus, parameters, mapperVastaus);
+		for (Iterator<Kysymys> iterator = kysymykset.iterator(); iterator.hasNext();) {
+			Kysymys kysymys = (Kysymys) iterator.next();
+			
+			System.out.println("kysymys:" + kysymys.getId() + " " + kysymys.getKysymys() + " " + kysymys.getTyyppi()); //kysymys id:t
+			
+			Object[] kysymysId = new Object[] { kysymys.getId() };
+			List<Vastaus> vastaukset = jdbcTemplate.query(sqlVastaus, kysymysId, mapperVastaus);
+			
+			kysymys.setVastaukset(vastaukset);
+			
+			System.out.println(vastaukset);
+		}
 		
 		kysely.setKysymykset(kysymykset);
 		
