@@ -14,8 +14,8 @@
 	<br/>
 	
 		<p>
-			<a href="kys/uusiKysymys">Hae Kysymys</a><br>
-			<a href="kys/haeKysymys">Tee Uusi Kysymys</a><br>
+			<a href="kys/uusiKysymys">Tee Uusi Kysymys</a><br>
+			<a href="kys/haeKysymys">Hae kysymys</a><br>
 			<a href="kys/kiitos">Kiitos</a><br>
 			</p>
     

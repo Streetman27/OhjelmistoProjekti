@@ -7,6 +7,17 @@
 <title>Kysymys Haettu</title>
 </head>
 <body>
+<h1>Tässä näet kaikki kysymykset</h1>
+	
+<c:forEach items="${kysymys}" var="kys">
+	<tr>
+		<td><c:out value="${kys.id}"/></td>
+		<td><c:out value="${kys.kysymys}"/></td>
+		<td><c:out value="${kys.kysymys_tyyppi.maaritelma}"/></td>
+		<td><input type="${kys.kysymys_tyyppi.maaritelma}" name="vastausmuoto" value="${kys.kysymys_tyyppi.id}"></td>
+	</tr>
+</c:forEach>
+
 	<p>
 	<a href="..">Takaisin etusivulle</a>
 	</p>
