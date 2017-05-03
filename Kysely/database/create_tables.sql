@@ -24,3 +24,12 @@ CREATE TABLE vastaus
 ,kysymys_id integer NOT NULL
 ,FOREIGN KEY (kysymys_id) REFERENCES kysymys(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE tulos
+(id integer NOT NULL auto_increment PRIMARY KEY
+,teksti varchar(255) NOT NULL
+,kysely_id integer NOT NULL
+,kysymys_id integer NOT NULL
+,FOREIGN KEY (kysely_id) REFERENCES kysely(id)
+,FOREIGN KEY (kysymys_id) REFERENCES kysymys(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

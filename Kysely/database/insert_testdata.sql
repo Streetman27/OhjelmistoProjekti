@@ -33,3 +33,9 @@ values
 	('vähän', 3),
 	('sopivasti', 3),
 	('paljon', 3);
+
+INSERT INTO tulos
+	(teksti, kysely_id, kysymys_id)
+values
+	('Opiskeluilmapiiri on tällä hetkellä erinomainen', 3, 1),
+	('Tämä on testikysymys', 1, 2);
