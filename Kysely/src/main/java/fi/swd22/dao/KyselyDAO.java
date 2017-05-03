@@ -1,9 +1,8 @@
 package fi.swd22.dao;
 
-import java.util.List;
-
 import fi.swd22.bean.Kysely;
 import fi.swd22.bean.Kysymys;
+import fi.swd22.bean.Tulos;
 
 public interface KyselyDAO {
 	
@@ -18,5 +17,8 @@ public interface KyselyDAO {
 	public abstract Kysymys paivitaKysymys(Kysymys kysymys);
 
 	public abstract int poistaKysymys(int id);
-
+	
+	//tuloksien tallettaminen
+	
+	public abstract void talletaTulos(Tulos tulos);
 }

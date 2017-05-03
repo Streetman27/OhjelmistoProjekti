@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import fi.swd22.bean.Kysely;
 import fi.swd22.bean.Kysymys;
+import fi.swd22.bean.Tulos;
 import fi.swd22.bean.Vastaus;
 
 @Repository
@@ -36,8 +37,6 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		Object[] kyselyId = new Object[] { id };
 		Kysely kysely = jdbcTemplate.queryForObject(sqlKysely, kyselyId, new KyselyRowMapper());
 		
-		System.out.println("kysely: " + kysely.getId() + " " + kysely.getNimi());
-		
 		//kysymys
 		String sqlKysymys="SELECT K.id, K.kysymys, T.maaritelma "
 		+ "FROM kysymys K "
@@ -59,14 +58,10 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		for (Iterator<Kysymys> iterator = kysymykset.iterator(); iterator.hasNext();) {
 			Kysymys kysymys = (Kysymys) iterator.next();
 			
-			System.out.println("kysymys:" + kysymys.getId() + " " + kysymys.getKysymys() + " " + kysymys.getTyyppi()); //kysymys id:t
-			
 			Object[] kysymysId = new Object[] { kysymys.getId() };
 			List<Vastaus> vastaukset = jdbcTemplate.query(sqlVastaus, kysymysId, mapperVastaus);
 			
 			kysymys.setVastaukset(vastaukset);
-			
-			System.out.println(vastaukset);
 		}
 		
 		kysely.setKysymykset(kysymykset);
@@ -108,6 +103,20 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	public int poistaKysymys(int id) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void talletaTulos(Tulos tulos) {
+		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
+				+ "values ('?', ?, ?)";
+		
+		final String teksti = tulos.getTeksti();
+		final int kysely_id = tulos.getKysely_id();
+		final int kysymys_id = tulos.getKysymys_id();
+		
+		Object[] parameters = new Object[] { teksti, kysely_id, kysymys_id };
+		
+		jdbcTemplate.update(sqlTulos, parameters);
+		System.out.println("Tulos lisätty: " + tulos); // delet this
 	}
 
 	

@@ -6,20 +6,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fi.swd22.bean.Kysely;
 import fi.swd22.bean.Kysymys;
-import fi.swd22.bean.Kysymys;
+import fi.swd22.bean.Tulos;
 import fi.swd22.dao.KyselyDAO;
-
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class KyselyController {
 	@Inject
 	KyselyDAO dao;
+	
+	@RequestMapping(value= "kysymys/{tulos}", method={RequestMethod.POST}, headers="application/json")
+	public @ResponseBody void talletaTulos(@PathVariable Tulos tulos){
+		dao.talletaTulos(tulos);
+	}
 	
 	//kyselyn kontrolli
 	@RequestMapping(value= "kysely/{id}", method= RequestMethod.GET)
