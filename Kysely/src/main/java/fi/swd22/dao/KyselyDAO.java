@@ -1,12 +1,19 @@
 package fi.swd22.dao;
 
+import java.util.List;
+
 import fi.swd22.bean.Kysely;
 import fi.swd22.bean.Kysymys;
 import fi.swd22.bean.Tulos;
 
 public interface KyselyDAO {
 	
+	//tuloksien käsittely
+	public abstract List<Tulos> haeTulosKysymys(int id);
+	
 	//kyselyn käsittely
+	public abstract List<Kysely> haeKaikkiKyselyt();
+	
 	public abstract Kysely haeKysely(int id);
 	
 	//yhden kysymyksen käsittely

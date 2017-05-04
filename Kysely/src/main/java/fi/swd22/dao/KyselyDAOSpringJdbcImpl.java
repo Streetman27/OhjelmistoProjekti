@@ -27,22 +27,32 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-
+	
+	public List<Kysely> haeKaikkiKyselyt() {
+		String sqlKaikkiKyselyt="SELECT id, nimi, kuvaus "
+				+ "FROM kysely";
+		
+		RowMapper<Kysely> mapper = new KyselyRowMapper();
+		List<Kysely> kyselyt = jdbcTemplate.query(sqlKaikkiKyselyt, mapper);
+		
+		return kyselyt;
+	}
+	
 	public Kysely haeKysely(int id) {
 		//kysely
-		String sqlKysely="SELECT id, nimi "
-		+ "FROM kysely "
-		+ "WHERE id = ?";
+		String sqlKysely="SELECT id, nimi, kuvaus "
+				+ "FROM kysely "
+				+ "WHERE id = ?";
 		
 		Object[] kyselyId = new Object[] { id };
 		Kysely kysely = jdbcTemplate.queryForObject(sqlKysely, kyselyId, new KyselyRowMapper());
 		
 		//kysymys
 		String sqlKysymys="SELECT K.id, K.kysymys, T.maaritelma "
-		+ "FROM kysymys K "
-		+ "JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id "
-		+ "JOIN kysely Kys ON Kys.id = K.kysely_id "
-		+ "WHERE Kys.id = ?;";
+				+ "FROM kysymys K "
+				+ "JOIN kysymys_tyyppi T ON T.id = K.tyyppi_id "
+				+ "JOIN kysely Kys ON Kys.id = K.kysely_id "
+				+ "WHERE Kys.id = ?;";
 		
 		RowMapper<Kysymys> mapperKysymys = new KysymysRowMapper();
 		List<Kysymys> kysymykset = jdbcTemplate.query(sqlKysymys, kyselyId, mapperKysymys);
@@ -104,7 +114,9 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	
+	//tulosten käsittely
 	public void talletaTulos(Tulos tulos) {
 		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
 				+ "VALUES (?, ?, ?)";
@@ -116,6 +128,18 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		Object[] parameters = new Object[] { teksti, kysely_id, kysymys_id };
 		
 		jdbcTemplate.update(sqlTulos, parameters);
+	}
+	
+	public List<Tulos> haeTulosKysymys(int id) {
+		String sqlTulokset="SELECT id, teksti, kysely_id, kysymys_id "
+				+ "FROM tulos "
+				+ "WHERE kysymys_id = ?";
+		
+		Object[] parameters = new Object[] { id };
+		
+		RowMapper<Tulos> mapperTulos = new TulosRowMapper();
+		List<Tulos> tulokset = jdbcTemplate.query(sqlTulokset, parameters, mapperTulos);
+		return tulokset;
 	}
 }
 
