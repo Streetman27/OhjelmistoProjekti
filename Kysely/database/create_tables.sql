@@ -7,6 +7,7 @@ CREATE TABLE kysymys_tyyppi
 CREATE TABLE kysely
 (id integer NOT NULL auto_increment PRIMARY KEY
 ,nimi varchar(255) NOT NULL
+,kuvaus varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE kysymys

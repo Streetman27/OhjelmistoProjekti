@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,27 +21,28 @@ public class KyselyController {
 	@Inject
 	KyselyDAO dao;
 	
-	@RequestMapping(value= "kysymys/{tulos}", method={RequestMethod.POST}, headers="application/json")
-	public @ResponseBody void talletaTulos(@PathVariable Tulos tulos){
+	//tuloksien hallinta
+	@RequestMapping(value= "tulos", method={RequestMethod.POST}, consumes="application/json")
+	public @ResponseBody void talletaTulos(@RequestBody Tulos tulos){ //{"id": "123","teksti": "vastausteksti","kysely_id": "1","kysymys_id": "2"}
 		dao.talletaTulos(tulos);
 	}
 	
-	//kyselyn kontrolli
+	//kyselyn hallinta
 	@RequestMapping(value= "kysely/{id}", method= RequestMethod.GET)
 	public @ResponseBody Kysely getKysely(@PathVariable int id){
 		Kysely kysely = dao.haeKysely(id);
 		return kysely;
 	}
 	
-	//kysymyksen kontrolli
+	//kysymyksen hallinta
 	@RequestMapping(value= "kysymys/{id}", method= RequestMethod.GET)
 	public @ResponseBody Kysymys getKysymys(@PathVariable int id){
 		Kysymys kysymys = dao.haeKysymys(id);
 		return kysymys;
 	}
 	
-	@RequestMapping(value= "kysymys/{uusi}", method={RequestMethod.POST}, headers="application/json")
-	public @ResponseBody Integer luoKysymys(@PathVariable Kysymys uusi){
+	@RequestMapping(value= "kysymys/uusi", method={RequestMethod.POST}, consumes="application/json")
+	public @ResponseBody Integer luoKysymys(@RequestBody Kysymys uusi){
 		int vastaus = dao.luoKysymys(uusi);
 		return vastaus;
 	}

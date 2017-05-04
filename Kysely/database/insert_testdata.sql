@@ -7,13 +7,13 @@ values
 	(3, 'checkbox'),
 	(4, 'textarea'),
 	(5, 'matrix');
-	
+
 INSERT INTO kysely
-	(id, nimi)
+	(id, nimi, kuvaus)
 values
-	(1, 'Testikysely1'),
-	(2, 'Testikysely2'),
-	(3, 'Kysely Helgan jäsenille.');
+	(1, 'Testikysely1', ''),
+	(2, 'Testikysely2', 'testikuvaus'),
+	(3, 'Kysely Helgan jäsenille.', 'Kysely niille opiskelijoille, jotka eivät ole Helgan jäseniä.');
 
 INSERT INTO kysymys
 	(id, kysymys, tyyppi_id, kysely_id)
@@ -27,16 +27,15 @@ values
 INSERT INTO vastaus
 	(teksti, kysymys_id)
 values
-	('kyllä', 5),
-	('ei', 5),
-	('ehkä', 5),
-	('vähän', 3),
-	('sopivasti', 3),
-	('paljon', 3);
+	('kyllä', 2),
+	('ei', 2),
+	('ehkä', 2),
+	('vähän', 4),
+	('sopivasti', 4),
+	('paljon', 4);
 
 INSERT INTO tulos
 	(teksti, kysely_id, kysymys_id)
 values
 	('Opiskeluilmapiiri on tällä hetkellä erinomainen', 3, 1),
-	('Tämä on testikysymys', 1, 2);
-
+	('ehkä', 1, 2);

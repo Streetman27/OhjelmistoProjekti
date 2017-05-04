@@ -107,7 +107,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 
 	public void talletaTulos(Tulos tulos) {
 		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
-				+ "values ('?', ?, ?)";
+				+ "VALUES (?, ?, ?)";
 		
 		final String teksti = tulos.getTeksti();
 		final int kysely_id = tulos.getKysely_id();
@@ -116,10 +116,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		Object[] parameters = new Object[] { teksti, kysely_id, kysymys_id };
 		
 		jdbcTemplate.update(sqlTulos, parameters);
-		System.out.println("Tulos lisätty: " + tulos); // delet this
 	}
-
-	
 }
 
 
