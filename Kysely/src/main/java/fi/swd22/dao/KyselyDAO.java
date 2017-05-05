@@ -25,5 +25,5 @@ public interface KyselyDAO {
 	// Tuloksien käsittely
 	public abstract List<Tulos> haeTulosKysymys(int id);
 
-	public abstract void talletaTulos(Tulos tulos);
+	public abstract int talletaTulos(Tulos tulos);
 }

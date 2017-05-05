@@ -63,8 +63,8 @@ public class KyselyController {
 	
 	//tuloksien hallinta
 	@RequestMapping(value= "tulos", method={RequestMethod.POST}, consumes="application/json")
-	public @ResponseBody void luoTulos(@RequestBody Tulos tulos){ //{"id": "123","teksti": "vastausteksti","kysely_id": "1","kysymys_id": "2"}
-		dao.talletaTulos(tulos);
+	public @ResponseBody int luoTulos(@RequestBody Tulos tulos){ //{"id": "123","teksti": "vastausteksti","kysely_id": "1","kysymys_id": "2"}
+		return dao.talletaTulos(tulos);
 	}
 	
 	@RequestMapping(value= "kysymys/tulos/{id}", method= RequestMethod.GET)

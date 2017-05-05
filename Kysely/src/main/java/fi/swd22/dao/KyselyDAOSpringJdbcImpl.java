@@ -161,9 +161,35 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	
 	
 // Tulosten k‰sittely
-	public void talletaTulos(Tulos tulos) {
-		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
+	public int talletaTulos(Tulos tulos) {
+		final String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
 				+ "VALUES (?, ?, ?)";
+		
+		final String teksti = tulos.getTeksti();
+		final int kysely_id = tulos.getKysely_id();
+		final int kysymys_id = tulos.getKysymys_id();
+		
+		KeyHolder idHolder = new GeneratedKeyHolder();
+	    
+		//suoritetaan p‰ivitys itse m‰‰ritellyll‰ PreparedStatementCreatorilla ja KeyHolderilla
+		jdbcTemplate.update(
+	    	    new PreparedStatementCreator() {
+	    	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+	    	            PreparedStatement ps = connection.prepareStatement(sqlTulos, new String[] {"id"});
+	    	            ps.setString(1, teksti);
+	    	            ps.setInt(2, kysely_id);
+	    	            ps.setInt(3, kysymys_id);
+	    	            return ps;
+	    	        }
+	    	    }, idHolder);
+	    
+		//tallennetaan id takaisin beaniin, koska
+		//kutsujalla pit‰isi olla viittaus samaiseen olioon
+	    return idHolder.getKey().intValue();
+	}
+	
+	public void talletaTulos2(Tulos tulos) {
+		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) VALUES (?, ?, ?)";
 		
 		final String teksti = tulos.getTeksti();
 		final int kysely_id = tulos.getKysely_id();
