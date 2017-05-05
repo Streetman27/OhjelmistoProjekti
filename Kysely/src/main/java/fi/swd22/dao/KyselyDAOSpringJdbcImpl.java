@@ -185,7 +185,8 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	    
 		//tallennetaan id takaisin beaniin, koska
 		//kutsujalla pitäisi olla viittaus samaiseen olioon
-	    return idHolder.getKey().intValue();
+	    
+		return idHolder.getKey().intValue();
 	}
 	
 	public void talletaTulos2(Tulos tulos) {
