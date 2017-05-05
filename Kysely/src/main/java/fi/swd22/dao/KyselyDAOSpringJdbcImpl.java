@@ -1,12 +1,18 @@
 package fi.swd22.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import fi.swd22.bean.Kysely;
@@ -27,7 +33,8 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
+
+// Kyselyiden k‰sittely
 	public List<Kysely> haeKaikkiKyselyt() {
 		String sqlKaikkiKyselyt="SELECT id, nimi, kuvaus "
 				+ "FROM kysely";
@@ -79,6 +86,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return kysely;
 	}
 	
+// Kysymyksien k‰sittely
 	public Kysymys haeKysymys(int id) {
 		String sqlKysymys="SELECT K.id, K.kysymys, T.maaritelma "
 				+ "FROM kysymys K "
@@ -100,9 +108,45 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return kysymys;
 	}
 
-	public int luoKysymys(Kysymys kysymys) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void luoKysymys(Kysymys kysymys, final int kysely_id) {
+	//hakee tyypille id:n
+		String sqlTyyppiMaaritelma = "SELECT id FROM kysymys_tyyppi WHERE maaritelma = ?";
+		String tyyppi = kysymys.getTyyppi();
+		final int tyyppi_id = jdbcTemplate.queryForObject(sqlTyyppiMaaritelma, Integer.class, tyyppi);
+	//lis‰‰ kysymyksen
+		final String sql = "INSERT INTO kysymys (kysymys, tyyppi_id, kysely_id) VALUES (?,?,?)";
+		
+		//anonyymi sis‰luokka tarvitsee vakioina v‰litett‰v‰t arvot,
+		//jotta roskien keruu onnistuu t‰m‰n metodin suorituksen p‰‰ttyess‰. 
+		final String kysymysTeksti = kysymys.getKysymys();
+		//final int tyyppi_id
+		//final int kysely_id
+		
+		//jdbc pist‰‰ generoidun id:n t‰nne talteen
+		KeyHolder idHolder = new GeneratedKeyHolder();
+	    
+		//suoritetaan p‰ivitys itse m‰‰ritellyll‰ PreparedStatementCreatorilla ja KeyHolderilla
+		jdbcTemplate.update(
+	    	    new PreparedStatementCreator() {
+	    	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+	    	            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+	    	            ps.setString(1, kysymysTeksti);
+	    	            ps.setInt(2, tyyppi_id);
+	    	            ps.setInt(3, kysely_id);
+	    	            return ps;
+	    	        }
+	    	    }, idHolder);
+	    
+		//tallennetaan id takaisin beaniin, koska
+		//kutsujalla pit‰isi olla viittaus samaiseen olioon
+	    int kysymys_id = idHolder.getKey().intValue();
+	    
+	//lis‰‰ vastaukset
+		List<Vastaus> vastaukset = kysymys.getVastaukset();
+		for (Vastaus vastaus : vastaukset) {
+			String sqlLuoVastaus = "INSERT INTO vastaus (teksti, kysymys_id) VALUES (?, ?)";
+			jdbcTemplate.update(sqlLuoVastaus, vastaus.getArvo(), kysymys_id);
+		}
 	}
 
 	public Kysymys paivitaKysymys(Kysymys kysymys) {
@@ -116,7 +160,7 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 	}
 	
 	
-	//tulosten k‰sittely
+// Tulosten k‰sittely
 	public void talletaTulos(Tulos tulos) {
 		String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
 				+ "VALUES (?, ?, ?)";
@@ -142,5 +186,3 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return tulokset;
 	}
 }
-
-
