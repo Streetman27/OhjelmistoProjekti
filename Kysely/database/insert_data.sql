@@ -83,7 +83,7 @@ VALUES
 	('36-40', 18),
 	('yli 40', 18),
 	('ei', 19),
-	('kyllä, mllainen?', 19),
+	('kyllä, millainen?', 19),
 	('kyllä', 20),
 	('en', 20),
 	('Sähköpostitse', 21),
