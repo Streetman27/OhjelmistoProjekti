@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import fi.swd22.bean.LuoKysymys;
 import fi.swd22.bean.Tulos;
 import fi.swd22.dao.KyselyDAO;
 
-
+@CrossOrigin
 @Controller
 public class KyselyController {
 	@Inject
