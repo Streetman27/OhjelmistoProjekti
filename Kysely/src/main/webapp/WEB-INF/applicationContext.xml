@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:sec="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -13,6 +16,8 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-4.0.xsd
 	">
 	
 	<!-- SERVLET -->
@@ -68,4 +73,35 @@
 	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
+	
+			
+	<!-- SECURITY -->
+	
+	<http entry-point-ref="restAuthenticationEntryPoint">
+      <intercept-url pattern="/api/admin/**" access="hasRole('ROLE_ADMIN')"/>
+ 
+      <form-login
+         authentication-success-handler-ref="mySuccessHandler"
+         authentication-failure-handler-ref="myFailureHandler"
+       />
+                     <!--
+         username-parameter="username"
+		 password-parameter="password"
+		 -->
+
+ 
+      <logout />
+   </http>
+   <beans:bean id="mySuccessHandler"
+      class="fi.swd22.security.MySavedRequestAwareAuthenticationSuccessHandler"/>
+   <beans:bean id="myFailureHandler" class=
+     "org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>
+ 
+   <authentication-manager alias="authenticationManager">
+      <authentication-provider>
+         <user-service>
+            <user name="testikayttaja" password="testisalasana" authorities="ROLE_ADMIN"/>
+         </user-service>
+      </authentication-provider>
+   </authentication-manager>
 </beans:beans>

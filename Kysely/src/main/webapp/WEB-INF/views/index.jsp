@@ -17,6 +17,7 @@
 			<a href="kys/uusiKysymys">Tee Uusi Kysymys</a><br>
 			<a href="kys/haeKysymys">Hae kysymys</a><br>
 			<a href="kys/kiitos">Kiitos</a><br>
+			<a href="api/admin/adminsivu">Admin</a><br>
 			</p>
     
 </body>
