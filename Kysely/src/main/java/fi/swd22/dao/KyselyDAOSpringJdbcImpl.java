@@ -46,32 +46,6 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return kyselyt;
 	}
 	
-	public int luoKysely(Kysely kysely){
-		//lis‰‰ kyselyn
-		final String sql = "INSERT INTO kysely (nimi, kuvaus) VALUES (?,?)";
-		
-		//anonyymi sis‰luokka tarvitsee vakioina v‰litett‰v‰t arvot,
-		//jotta roskien keruu onnistuu t‰m‰n metodin suorituksen p‰‰ttyess‰. 
-		final String kyselyNimi = kysely.getNimi();
-		final String kyselyKuvaus = kysely.getKuvaus();
-		
-		//jdbc pist‰‰ generoidun id:n t‰nne talteen
-		KeyHolder idHolder = new GeneratedKeyHolder();
-	    
-		//suoritetaan p‰ivitys itse m‰‰ritellyll‰ PreparedStatementCreatorilla ja KeyHolderilla
-		jdbcTemplate.update(
-	    	    new PreparedStatementCreator() {
-	    	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-	    	            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
-	    	            ps.setString(1, kyselyNimi);
-	    	            ps.setString(2, kyselyKuvaus);
-	    	            return ps;
-	    	        }
-	    	    }, idHolder);
-	    
-		return idHolder.getKey().intValue();
-	}
-	
 	public Kysely haeKysely(int id) {
 		//kysely
 		String sqlKysely="SELECT id, nimi, kuvaus "
@@ -113,6 +87,56 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return kysely;
 	}
 	
+	public int luoKysely(Kysely kysely){
+		//lis‰‰ kyselyn
+		final String sql = "INSERT INTO kysely (nimi, kuvaus) VALUES (?,?)";
+		
+		//anonyymi sis‰luokka tarvitsee vakioina v‰litett‰v‰t arvot,
+		//jotta roskien keruu onnistuu t‰m‰n metodin suorituksen p‰‰ttyess‰. 
+		final String kyselyNimi = kysely.getNimi();
+		final String kyselyKuvaus = kysely.getKuvaus();
+		
+		//jdbc pist‰‰ generoidun id:n t‰nne talteen
+		KeyHolder idHolder = new GeneratedKeyHolder();
+	    
+		//suoritetaan p‰ivitys itse m‰‰ritellyll‰ PreparedStatementCreatorilla ja KeyHolderilla
+		jdbcTemplate.update(
+	    	    new PreparedStatementCreator() {
+	    	        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+	    	            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"});
+	    	            ps.setString(1, kyselyNimi);
+	    	            ps.setString(2, kyselyKuvaus);
+	    	            return ps;
+	    	        }
+	    	    }, idHolder);
+	    
+		return idHolder.getKey().intValue();
+	}
+	
+	public void paivitaKysely(int id, Kysely kysely) {
+		String sql = "UPDATE kysely "
+				+ "SET nimi = ?, kuvaus = ? "
+				+ "WHERE id = ?";
+		
+		Object[] parameters = new Object[] { kysely.getNimi(), kysely.getKuvaus(), id };
+		
+		jdbcTemplate.update(sql, parameters);
+	}
+	
+	public Kysely poistaKysely(int id) {
+		Kysely kysely = haeKysely(id);
+			
+		String sql = "DELETE FROM kysely WHERE id = ?";
+		try {
+			getJdbcTemplate().update(sql,id);
+		} catch (RuntimeException runtimeException) {
+			System.err.println("RuntimeException occurred");
+			System.err.println(runtimeException);
+			throw runtimeException;
+		}
+		
+		return kysely;
+	}
 // Kysymyksien k‰sittely
 	public Kysymys haeKysymys(int id) {
 		String sqlKysymys="SELECT K.id, K.kysymys, T.maaritelma "
@@ -177,17 +201,37 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		return idHolder.getKey().intValue();
 	}
 
-	public Kysymys paivitaKysymys(Kysymys kysymys) {
-		// TODO Auto-generated method stub
-		return null;
+	public void paivitaKysymys(int id, LuoKysymys kysymys) {
+		String sqlkysymys = "UPDATE kysely "
+				+ "SET kysymys = ?, tyyppi_id = ?, kysely_id = ? "
+				+ "WHERE id = ?";
+		String sqlvastaukset = "UPDATE kysely "
+				+ "SET kysymys = ?, tyyppi_id = ?, kysely_id = ? "
+				+ "WHERE id = ?";
+		
+		Object[] kysymysTiedot = new Object[] { kysymys.getKysymys(), kysymys.getTyyppi(), kysymys.getKysely_id(), id };
+		//Object[] vastausTiedot = new Object[] { , kysymys.getId() };
+		
+		jdbcTemplate.update(sqlkysymys, kysymysTiedot);
+		//jdbcTemplate.update(sqlvastaukset, vastausTiedot);
+		
+		// TODO
 	}
 
-	public int poistaKysymys(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Kysymys poistaKysymys(int id) {
+		Kysymys kysymys = haeKysymys(id);
+		
+		String sql = "DELETE FROM kysymys WHERE id = ?";
+		try {
+			getJdbcTemplate().update(sql,id);
+		} catch (RuntimeException runtimeException) {
+			System.err.println("RuntimeException occurred");
+			System.err.println(runtimeException);
+			throw runtimeException;
+		}
+		return kysymys;
 	}
-	
-	
+
 // Tulosten k‰sittely
 	public int talletaTulos(Tulos tulos) {
 		final String sqlTulos = "INSERT INTO tulos (teksti, kysely_id, kysymys_id) "
@@ -240,4 +284,6 @@ public class KyselyDAOSpringJdbcImpl implements KyselyDAO {
 		List<Tulos> tulokset = jdbcTemplate.query(sqlTulokset, parameters, mapperTulos);
 		return tulokset;
 	}
+
+	
 }

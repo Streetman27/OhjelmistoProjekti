@@ -16,14 +16,14 @@ CREATE TABLE kysymys
 ,tyyppi_id integer NOT NULL
 ,kysely_id integer NOT NULL
 ,FOREIGN KEY (tyyppi_id) REFERENCES kysymys_tyyppi(id)
-,FOREIGN KEY (kysely_id) REFERENCES kysely(id)
+,FOREIGN KEY (kysely_id) REFERENCES kysely(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE vastaus
 (id integer NOT NULL auto_increment PRIMARY KEY
 ,teksti varchar(255) NOT NULL
 ,kysymys_id integer NOT NULL
-,FOREIGN KEY (kysymys_id) REFERENCES kysymys(id)
+,FOREIGN KEY (kysymys_id) REFERENCES kysymys(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE tulos

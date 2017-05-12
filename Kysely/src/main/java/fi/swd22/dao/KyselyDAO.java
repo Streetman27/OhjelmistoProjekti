@@ -10,20 +10,24 @@ import fi.swd22.bean.Tulos;
 public interface KyselyDAO {
 
 	// Kyselyn käsittely
-	public abstract int luoKysely(Kysely kysely);
-	
 	public abstract List<Kysely> haeKaikkiKyselyt();
 
 	public abstract Kysely haeKysely(int id);
+
+	public abstract int luoKysely(Kysely kysely);
+
+	public abstract void paivitaKysely(int id, Kysely kysely);
+
+	public abstract Kysely poistaKysely(int id);
 
 	// Yhden kysymyksen käsittely
 	public abstract Kysymys haeKysymys(int id);
 
 	public abstract int luoKysymys(LuoKysymys kysymys);
 
-	public abstract Kysymys paivitaKysymys(Kysymys kysymys);
+	public abstract void paivitaKysymys(int id, LuoKysymys kysymys);
 
-	public abstract int poistaKysymys(int id);
+	public abstract Kysymys poistaKysymys(int id);
 
 	// Tuloksien käsittely
 	public abstract List<Tulos> haeTulosKysymys(int id);

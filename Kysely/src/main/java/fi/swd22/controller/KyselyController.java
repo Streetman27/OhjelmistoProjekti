@@ -39,6 +39,24 @@ public class KyselyController {
 		return kysely;
 	}
 	
+	@RequestMapping(value="kysely/uusi", method=RequestMethod.POST, consumes="application/json")
+	public @ResponseBody Id luoKysely(@RequestBody Kysely kysely){
+		Id id = new Id(dao.luoKysely(kysely));
+		
+		return id;
+	}
+	//prog vvv
+	@RequestMapping(value= "kysely/{id}", method=RequestMethod.PUT)
+	public @ResponseBody void paivitaKysely(@PathVariable int id, @RequestBody Kysely paivitys){
+		dao.paivitaKysely(id, paivitys);
+	}
+	//prog ^^^
+	
+	@RequestMapping(value= "kysely/{id}", method=RequestMethod.DELETE)
+	public @ResponseBody Kysely poistaKysely(@PathVariable int id){
+		return dao.poistaKysely(id);
+	}
+	
 	//kysymyksen hallinta
 	@RequestMapping(value= "kysymys/{id}", method= RequestMethod.GET, produces="application/json")
 	public @ResponseBody Kysymys getKysymys(@PathVariable int id){
@@ -51,27 +69,16 @@ public class KyselyController {
 		Id id = new Id(dao.luoKysymys(kysymys));		
 		return id;
 	}
-	//in progress vvv
+	
 	@RequestMapping(value= "kysymys/{id}", method=RequestMethod.DELETE)
-	public @ResponseBody Integer poistaKysymys(@PathVariable int id){
-		int vastaus = dao.poistaKysymys(id);
-		return vastaus;
+	public @ResponseBody Kysymys poistaKysymys(@PathVariable int id){
+		return dao.poistaKysymys(id);
 	}
 	
 	@RequestMapping(value= "kysymys/{id}", method=RequestMethod.PUT)
-	public @ResponseBody Kysymys paivitaKysymys(@RequestBody Kysymys paivitys){
-		Kysymys kysymys = dao.paivitaKysymys(paivitys);
-		return kysymys;
+	public @ResponseBody void paivitaKysymys(@PathVariable int id, @RequestBody LuoKysymys paivitys){
+		dao.paivitaKysymys(id, paivitys);
 	}
-	
-	
-	@RequestMapping(value="kysely/uusi", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody Id luoKysely(@RequestBody Kysely kysely){
-		Id id = new Id(dao.luoKysely(kysely));
-		
-		return id;
-	}
-// in progress ^^^
 	
 	//tuloksien hallinta
 	@RequestMapping(value= "tulos", method={RequestMethod.POST}, consumes="application/json")
